@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.bienvenida),
     url(r'^(\d+)$', views.redir),
+    url(r'^.+', views.inco_entrada),
 ]

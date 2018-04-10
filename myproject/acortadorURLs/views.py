@@ -42,5 +42,8 @@ def redir(request, url_corta):
         respuesta = "Método no permitido"
     return HttpResponse(respuesta)
 
+def inco_entrada(request):
+    respuesta = "Recurso incorrecto. Debe introducir <big><b>localhost:8000/[num]</b></big>"
+    return HttpResponse(respuesta)
 
 
