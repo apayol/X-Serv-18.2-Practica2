@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from acortadorURLs import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'acortadorURLs.views.bienvenida'),
+    url(r'^$', views.bienvenida),
+    url(r'^(\d+)$', views.redir),
 ]
