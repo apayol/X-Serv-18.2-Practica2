@@ -35,11 +35,15 @@ def bienvenida(request):
         url_larga = estandar_url(url_larga)
         try:  # busco si ya está guardada
             busco = Urls.objects.get(url_larga=url_larga)
-            respuesta = "Esa url ya fue acortada y está guardada" 
-        except Urls.DoesNotExist:  # no está guardada
+            respuesta = "Esa url ya fue acortada y está guardada:" 
+            respuesta += "<br>Url original: <a href=" + busco.url_larga + ">" + busco.url_larga + "</a>"
+            respuesta += " => Url corta : <a href=" + str(busco.id) + ">" + str(busco.id) + "</a>"
+        except Urls.DoesNotExist:  # si no está guardada
             nueva = Urls(url_larga=url_larga)
             nueva.save()
-            respuesta = "Ha sido guardada" 
+            respuesta = "Ha sido acortada y guardada:" 
+            respuesta += "<br>Url original: <a href=" + nueva.url_larga + ">" + nueva.url_larga + "</a>"
+            respuesta += " => Url corta : <a href=" + str(nueva.id) + ">" + str(nueva.id) + "</a>"
     else:
         respuesta = "Método no permitido"
     return HttpResponse(respuesta)
