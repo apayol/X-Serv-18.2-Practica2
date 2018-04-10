@@ -8,10 +8,16 @@ from django.views.decorators.csrf import csrf_exempt
 FORMULARIO = """
     <form action="" method="POST">
         Introduzca URL para reducir:
-        <input type="text" name="URL" value="http://">
+        <input type="text" name="url_larga" value="http://">
         <input type="submit" value="Enviar">
     </form>
 """
+
+def estandar_url(url_larga):
+    if url_larga.startswith("http://") or url_larga.startswith("https://"):
+        return url_larga
+    else:
+        return ("http://" + url_larga)
 
 @csrf_exempt
 def bienvenida(request):
@@ -25,7 +31,15 @@ def bienvenida(request):
         respuesta += "<br><br>" + FORMULARIO
 
     elif request.method == "POST":
-        respuesta = "Es un post"
+        url_larga = request.POST["url_larga"]
+        url_larga = estandar_url(url_larga)
+        try:  # busco si ya está guardada
+            busco = Urls.objects.get(url_larga=url_larga)
+            respuesta = "Esa url ya fue acortada y está guardada" 
+        except Urls.DoesNotExist:  # no está guardada
+            nueva = Urls(url_larga=url_larga)
+            nueva.save()
+            respuesta = "Ha sido guardada" 
     else:
         respuesta = "Método no permitido"
     return HttpResponse(respuesta)
