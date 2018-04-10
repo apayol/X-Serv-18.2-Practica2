@@ -5,4 +5,4 @@ from django.db import models
 class Urls(models.Model):
     url_larga = models.CharField(max_length = 128)
     def __str__(self):
-        return self.nombre
+        return self.url_larga
